@@ -46,7 +46,7 @@ public class Retrieve implements CRUD{
                 data[cols][3] = rs.getString("col3");
                 data[cols][4] = rs.getString("col4");
                 data[cols][5] = rs.getString("col5");
-                ++cols;
+            ++cols;
             }
             conn.close();
         } catch (SQLException ex) {
