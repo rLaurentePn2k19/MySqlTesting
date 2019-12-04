@@ -4,14 +4,12 @@
  * and open the template in the editor.
  */
 
-package mysql;
+package OneThousand;
 
 /**
  *
  * @author laurentera_sd2022
  */
-public class DeleteWConnection implements CRUD{
-    
-    
+public class RetrieveUsingInternalFunction1k {
     
 }
