@@ -28,10 +28,8 @@ public class MCreateWithConnection200 {
         Date timeStart = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
         System.out.println("Time Started: " + dateFormat.format(timeStart));
-
-        try {
-
-            for (int i = 1; i < 201; i++) {
+        for (int i = 1; i < 201; i++) {
+            try {
                 Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
                 mongoLogger.setLevel(Level.SEVERE);
                 MongoClient mongoClient = new MongoClient("localhost", 27017);
@@ -44,11 +42,12 @@ public class MCreateWithConnection200 {
                         .append("col5", i + 4);
                 collection.insert(object);
                 System.out.println("Inserted Successfully");
+
+            } catch (SecurityException e) {
+                System.out.println(e);
+            } catch (UnknownHostException ex) {
+                Logger.getLogger(MCreateWithConnection200.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SecurityException e) {
-            System.out.println(e);
-        } catch (UnknownHostException ex) {
-            Logger.getLogger(MCreateWithConnection200.class.getName()).log(Level.SEVERE, null, ex);
         }
         Date timeFinish = new Date();
         SimpleDateFormat dateFormatFinish = new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");

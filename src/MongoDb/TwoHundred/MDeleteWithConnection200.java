@@ -27,21 +27,22 @@ public class MDeleteWithConnection200 {
         Date timeStart = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
         System.out.println("Time Started: " + dateFormat.format(timeStart));
+        
+        for (int i = 1; i < 201; i++) {
+            
+            try {
+                Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
+                mongoLogger.setLevel(Level.SEVERE);
+                MongoClient mongoClient = new MongoClient("localhost", 27017);
+                DB db = mongoClient.getDB("myMongoDb");
+                DBCollection collection = db.getCollection("myCollecion");
 
-        try {
-            Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
-            mongoLogger.setLevel(Level.SEVERE);
-            MongoClient mongoClient = new MongoClient("localhost", 27017);
-            DB db = mongoClient.getDB("myMongoDb");
-            DBCollection collection = db.getCollection("myCollecion");
-
-            for (int i = 1; i < 201; i++) {
 //                BasicDBObject remove1000 = new BasicDBObject("col1", i);
                 collection.remove(new BasicDBObject("col1", i));
                 System.out.println("Deleted Successfully");
+            } catch (SecurityException e) {
+                System.out.println(e);
             }
-        } catch (SecurityException e) {
-            System.out.println(e);
         }
 
         Date timeFinish = new Date();

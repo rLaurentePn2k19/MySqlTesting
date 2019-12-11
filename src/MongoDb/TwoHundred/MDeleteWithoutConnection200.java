@@ -29,12 +29,12 @@ public class MDeleteWithoutConnection200 {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
         System.out.println("Time Started: " + dateFormat.format(timeStart));
 
-        Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
-        mongoLogger.setLevel(Level.SEVERE);
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
-        DB db = mongoClient.getDB("myMongoDb");
-        DBCollection collection = db.getCollection("myCollecion");
         try {
+            Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
+            mongoLogger.setLevel(Level.SEVERE);
+            MongoClient mongoClient = new MongoClient("localhost", 27017);
+            DB db = mongoClient.getDB("myMongoDb");
+            DBCollection collection = db.getCollection("myCollecion");
             for (int i = 1; i < 1001; i++) {
 //                BasicDBObject remove1000 = new BasicDBObject("col1", i);
                 collection.remove(new BasicDBObject("col1", i));

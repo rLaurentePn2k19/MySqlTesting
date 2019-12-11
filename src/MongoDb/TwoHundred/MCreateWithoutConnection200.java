@@ -29,12 +29,12 @@ public class MCreateWithoutConnection200 {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
         System.out.println("Time Started: " + dateFormat.format(timeStart));
 
-        Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
-        mongoLogger.setLevel(Level.SEVERE);
-        MongoClient mongoClient = new MongoClient("localhost", 27017);
-        DB db = mongoClient.getDB("myMongoDb");
-        DBCollection collection = db.getCollection("myCollecion");
         try {
+            Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
+            mongoLogger.setLevel(Level.SEVERE);
+            MongoClient mongoClient = new MongoClient("localhost", 27017);
+            DB db = mongoClient.getDB("myMongoDb");
+            DBCollection collection = db.getCollection("myCollecion");
             for (int i = 1; i < 201; i++) {
                 BasicDBObject object = new BasicDBObject("col1", i)
                         .append("col2", i + 1)
