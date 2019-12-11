@@ -3,51 +3,50 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package TwoHundred;
+package MongoDb.OneThousand;
 
-import MySql_MongoDb.CRUD;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.MongoClient;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author laurentera_sd2022
  */
-public class CreateWithoutConnection200 implements CRUD {
+public class MCreateWithoutConnection1k {
 
-    int col1 = 0;
-    int col2 = 0;
-    int col3 = 0;
-    int col4 = 0;
-    int col5 = 0;
     int Time = 0;
 
-    public void Insert() {
+    public void insert() throws UnknownHostException {
         Date timeStart = new Date();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
         System.out.println("Time Started: " + dateFormat.format(timeStart));
 
-        Connection conn = null;
-        Statement stmt = null;
-        String insertQuery;
-
+        Logger mongoLogger = Logger.getLogger("org.mongodb.driver");
+        mongoLogger.setLevel(Level.SEVERE);
+        MongoClient mongoClient = new MongoClient("localhost", 27017);
+        DB db = mongoClient.getDB("myMongoDb");
+        DBCollection collection = db.getCollection("myCollecion");
         try {
-            conn = DriverManager.getConnection(DB_URL, USER, PASS);
-            stmt = conn.createStatement();
-            for (int i = 0; i < 200; i++) {
-                insertQuery = String.format("INSERT INTO `numbers` (col1,col2,col3,col4,col5)"
-                        + "VALUES ('%d','%d','%d','%d','%d')", col1 + 1 + i, col2 + 2 + i, col3 + 3 + i, col4 + 4 + i, col5 + 5 + i);
-                int result = stmt.executeUpdate(insertQuery);
-                System.out.println(result);
+            for (int i = 1; i < 1001; i++) {
+                BasicDBObject object = new BasicDBObject("col1", i)
+                        .append("col2", i + 1)
+                        .append("col3", i + 2)
+                        .append("col4", i + 3)
+                        .append("col5", i + 4);
+                collection.insert(object);
+                System.out.println("Inserted successfully");
             }
-            conn.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+        } catch (SecurityException e) {
+            System.out.println(e);
         }
+
         Date timeFinish = new Date();
         SimpleDateFormat dateFormatFinish = new SimpleDateFormat("yyyy-MM-dd  hh:mm:ss");
         System.out.println("Time Finish: " + dateFormatFinish.format(timeFinish));
